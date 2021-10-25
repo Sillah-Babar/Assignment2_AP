@@ -31,12 +31,36 @@ public class Flight {
 	}
 	public int GenerateSeat()
 	{
+
 		int s=-1;
+		boolean check=true;
 		if(seatNo< totalPassengers)
 		{
-		Seats[seatNo]=1;
-		seatNo++;
-		s=seatNo;
+			try
+			{
+			int i=0;
+			for(i=0 ; i<totalPassengers && check==true ; i++)
+			{
+				if(Seats[i]!=-1)
+				{
+					Seats[i]=1;
+				     check=false;	
+				}
+			}
+			if(check==false)
+			{
+				seatsAvailable--;
+				seatNo++;
+				
+				s=i;
+
+			}
+			}
+		 catch(Exception e)
+			{
+			 System.out.println("Array index out of bound");
+			}
+				
 		}
 		else
 		{

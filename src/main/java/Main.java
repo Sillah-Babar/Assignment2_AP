@@ -55,11 +55,16 @@ public class Main {
 				while(choice!=0)
 				{
 					System.out.println("1.Print Eticket");
+					System.out.println("2.Cancel the ticket");
 					System.out.println("0.Exit");
 					choice=input.nextInt();
 					if(choice==1)
 					{
 						object.Files.PrintTicket();
+					}
+					else if(choice==2)
+					{
+						object.Files.cancelTicket();
 					}
 					
 				}

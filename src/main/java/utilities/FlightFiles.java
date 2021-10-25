@@ -430,9 +430,56 @@ public class FlightFiles {
     		}
     	}
     }
+    public void cancelTicket()
+	{
+	Scanner input=new Scanner(System.in);
+    	
+    	System.out.println("Enter your Name");
+    	String n=input.next();
+    	System.out.println("Enter your Ticket Token");
+    	String ticket=input.next();
+    	boolean Ticketreturn=false;
+    	int position=0;
+    	for(int i=0 ; i<passCount ; i++)
+    	{
+    		if(customers[i].Name.equals(n) && customers[i].TicketCode.equals(ticket))
+    		{
+    		 Ticketreturn	 =customers[i].deleteTicket();
+    		 position=i;
+    			i=passCount;
+    		}
+    	}
+    	if(Ticketreturn==false)
+    	{
+    		System.out.println("Your ticket cannot be cancelled as the date of flight has already passed");
+    	}
+    	else 
+    	{
+    		for(int i=0 ; i<dateCount ; i++)
+    		{
+    			if(flightObject[i].date.date.equals(customers[position].Date))
+    			{
+    				for(int j=0 ; j<flightObject[i].flightCount ; j++)
+    				{
+    					if(flightObject[i].flights[j].flightNo==customers[position].obj.flightNo)
+    					{
+    						flightObject[i].flights[j].seatsAvailable++;	
+    						flightObject[i].flights[j].seatNo--;	
+    					}
+    				}
+ 
+    			}
+    			
+    		}
+    	}
+    	
+    	
+    	
+    	
+	}
 	public void RemoveFromFile(DatedFlights fl,int fno)
 	{
-		/*
+/*		
 		String[] array= fl.date.date.split("/");
 		String Filename="";
 		Filename+="Flights_";
@@ -450,9 +497,11 @@ public class FlightFiles {
 
 			BufferedWriter writer = new BufferedWriter(new FileWriter("dummy.csv"));
 			String contentLine = br.readLine();
+			int count=0;
 			while (contentLine != null) 
 			{
 				System.out.println(contentLine);
+				System.out.printf("fno %d: ",fno);
 				String [] arr=contentLine.split(",");
 				if(arr[0].equals(String.valueOf(fno)))
 				{
@@ -461,17 +510,20 @@ public class FlightFiles {
 				else
 				{
 					System.out.println("yeah");
+				
 					writer.append(contentLine);
+					
+					count++;
 				}
 				contentLine = br.readLine();
 			}
 
 
 			fr.close();
-		
+		    writer.close();
 			br.close();
 		
-			file2=new File("dummy.csv");
+			File file2=new File("dummy.csv");
 			file= new File (Filename);
 			if (file.delete()) { 
 				System.out.println("Deleted the file: " + myObj.getName());
@@ -481,10 +533,10 @@ public class FlightFiles {
 			file=new File(Filename);
 			if (file.createNewFile()) {
 				System.out.println("File created: " + file.getName());
-				fr2=new FileWriter(file);
+				FileWriter fr2=new FileWriter(file);
 				fr=new FileReader(file2);
 				br=new BufferedReader(fr);
-				br2=new BufferedWriter(fr2);
+				BufferedWriter br2=new BufferedWriter(fr2);
 				System.out.println("Reading from the dummy file");
 
 				contentLine = br.readLine();
@@ -492,20 +544,19 @@ public class FlightFiles {
 				{
 
 					System.out.println(contentLine);
-					br2.write(contentLine);
+					br2.append(contentLine);
 					contentLine = br.readLine();
 				}
+				fr2.close();
+				br2.close();
+				br.close();
+				fr.close();
 				if (file2.delete()) { 
 					System.out.println("Deleted the file: " + myObj.getName());
 				} else {
 					System.out.println("Failed to delete the file.");
 				}
-
-				fr.close();
-				fr2.close();
-				br.close();
-				br2.close();		   
-
+					   
 			}
 
 		}
@@ -514,7 +565,7 @@ public class FlightFiles {
 			System.out.println("cant open files");
 		}		
 
-	}
-	*/
+	
+*/	
  }
 }
